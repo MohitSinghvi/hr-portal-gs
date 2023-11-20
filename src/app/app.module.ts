@@ -8,6 +8,7 @@ import { TimelineComponent } from './timeline/timeline.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { DepartmentsComponent } from './departments/departments.component';
+import { AuthModule } from '@auth0/auth0-angular';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,14 @@ import { DepartmentsComponent } from './departments/departments.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    AuthModule.forRoot({
+      domain: 'dev-2cnu1udo241a4jj0.us.auth0.com',
+      clientId: 'dh0bjg1SZLiM3JPQSbxLrJtEi0G6Z4S2',
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

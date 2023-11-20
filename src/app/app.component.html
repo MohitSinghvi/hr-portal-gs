@@ -4,13 +4,23 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
+    <div class="navbar-nav w-100">
       <a class="nav-item nav-link active" href="/dashboard">Dashboard</a>
       <a class="nav-item nav-link active" href="/departments">Departments</a>
       <a class="nav-item nav-link active" href="/employees">Employees</a>
-      <a class="nav-item nav-link" href="#">Logout</a>
-      <!-- <a class="nav-item nav-link" href="#">Pricing</a>
-      <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
+      <a *ngIf="!(auth.isAuthenticated$ | async)" href="#" class="nav-item nav-link" (click)="auth.loginWithRedirect()">Login</a>
+
+      <div *ngIf="(auth.isAuthenticated$ | async)" class=" w-100">
+          <div ngbDropdown class="d-inline-block dropstart" style="float: right;">
+            <button *ngIf="auth.user$ | async as user" type="button" class="btn text-white" id="dropdownBasic1" ngbDropdownToggle>
+              <i class="bi bi-person"></i>   {{ user.name }}         </button> 
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropstart">
+              <button ngbDropdownItem>Profile</button>
+              <button ngbDropdownItem (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">Logout</button>
+            </div>
+          </div>
+      
+      </div>
     </div>
   </div>
   
