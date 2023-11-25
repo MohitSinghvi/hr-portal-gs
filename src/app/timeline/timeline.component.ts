@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-timeline',
@@ -7,6 +7,23 @@ import { Component } from '@angular/core';
 })
 export class TimelineComponent {
 
-  heading: any;
+  @Input()
+  // data = [ 
+  //   {
+  //     "value" : "Sales",
+  //     "date_range": "2000-12-09 - 2002-10-05",
+  //   },
+  //   {
+  //     "value" :"HR" ,
+  //     "date_range": "2002-10-06 - 2005-10-05",
+  //   },
+  //   {
+  //     "value" :"Engineering" ,
+  //     "date_range": "2005-10-06 - present",
+  //   }
+  // ];
   data: any;
+  heading: any;
+
+  @Input() key = 'val';
 }

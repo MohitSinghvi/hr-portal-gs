@@ -1,60 +1,102 @@
 <h3 class="p-3 m-3" style="float: left;">Departments</h3>
-<button type="button" class="btn btn-light m-3" style = "float: right; background-color: #534360 !important; color: white">Create New</button>
+
+<button type="button" class="btn btn-light m-3"
+  style="float: right; background-color: var(--main-color) !important; color: white" (click)="openEditDepartmentForm($event)">Create
+  New</button>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':'block'}" *ngIf="showPopup">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <button type="button" class="btn-close p-1 m-1" style="align-self: end;" aria-label="Close"
+        (click)="closePopup()"></button>
+      <!-- <div class="modal-header" style = "align-self: center;"> 
+      Register Employee
+    </div>  -->
+
+      <div class="modal-body w-100" style="align-self: center;">
+
+        <h3 class="p-2">Add Department</h3>
+
+        <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()" class="ml-4 needs-validation p-2 w-100" novalidate>
+          <div class="form-row" style="align-self: center;">
+
+            <div class="col-md-8 mb-3">
+              <label for="validationCustom01">Department Name: </label>
+              <input type="text" class="form-control" id="validationCustom01" placeholder="Department name" value="Mark"
+                formControlName="dept_name" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-3">
+              <label for="validationCustom02">Manager: </label>
+
+              <select class="form-select" aria-label="Default select example" formControlName="manager_no">
+                <option selected>Select</option>
+                <ng-container *ngFor="let manager of managers">
+                  <option [ngValue]="manager['emp_no']" value="manager['emp_no']">{{manager['first_name']}} {{manager['last_name']}} 
+                  </option>
+                </ng-container>
+              </select>
+
+            </div>
+
+
+            <!-- <div class="col-md-8 mb-3">
+            <label for="validationCustom02">Manager: </label>
+
+            <select class="form-select" aria-label="Default select example">
+              <option selected>Select</option>
+              <ng-container *ngFor="let item of list">
+                <option [ngValue]="item" *ngIf="item.emp_no!=loggedInUser" value="1">{{item.first_name}} {{item.last_name}}</option>
+              </ng-container>
+            </select>
+            
+          </div> -->
+
+          </div>
+        </form>
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" style="background-color: var(--main-color) !important; color: white"  class="btn btn-primary" (click)="onSubmit()">Save</button>
+        <button type="button" class="btn btn-light" (click)="closePopup()">
+          Clear
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <table class="table table-striped p-3 m-3">
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">Department No</th>
         <th scope="col">Name</th>
         <th scope="col">Manager</th>
         <th>Actions</th>
         
       </tr>
     </thead>
+
+   
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Mark</td>
-        <td></td>
-      </tr>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Mark</td>
-        <td></td>
-      </tr>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Mark</td>
-        <td></td>
-      </tr>
+      <ng-container *ngFor="let item of list; ; index as i">
+        <tr>
+          <th scope="row">{{item.dept_no}}</th>
+          <td>{{item.dept_name}}</td>
+          <td>{{item.manager}}</td>
+          <td><i (click)="openEditDepartmentForm(item.dept_no)" class="bi bi-pen p-2"></i></td>
+        </tr>
+      </ng-container>
     </tbody>
   </table>
-
-
-  <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-  </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
