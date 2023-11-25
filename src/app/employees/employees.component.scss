@@ -1,0 +1,10 @@
+.page-link.active{
+    background-color: var(--main-color);
+    color: white;
+    border-color: var(--main-color);
+}
+
+.page-link{
+    color: var(--main-color);
+    cursor: pointer;
+}

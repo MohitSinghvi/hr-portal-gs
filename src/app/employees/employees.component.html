@@ -1,53 +1,301 @@
 <h3 class="p-3 m-3" style="float: left;">Employees</h3>
-<button type="button" class="btn btn-light m-3" style = "float: right; background-color: #534360 !important; color: white">Create New</button>
+<button type="button" class="btn btn-light m-3"
+  style="float: right; background-color: var(--main-color) !important; color: white" (click)="openPopup()">Create
+  New</button>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':'block'}" *ngIf="showPopup">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <button type="button" class="btn-close p-1 m-1" style="align-self: end;" aria-label="Close"
+        (click)="closePopup()"></button>
+      <!-- <div class="modal-header" style = "align-self: center;"> 
+      Register Employee
+    </div>  -->
+
+      <div class="modal-body w-100" style="align-self: center;">
+
+        <h3 class="p-2">Register Employee</h3>
+
+        <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="ml-4 needs-validation p-2 w-100" novalidate>
+          <div class="form-row" style="align-self: center;">
+
+            <div class="col-md-8 mb-3">
+              <label for="validationCustom01">First Name: </label>
+              <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="Mark"
+                formControlName="first_name" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-3">
+              <label for="validationCustom01">Last Name: </label>
+              <input type="text" class="form-control" id="validationCustom01" placeholder="Last name" value="Mark"
+                formControlName="last_name" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-3">
+              <label for="validationCustom02">Gender: </label>
+              <!-- <input type="text" class="form-control" id="validationCustom02" placeholder="Gender" value="016888079" formControlName="gender" required> -->
+              <select class="form-select" formControlName="gender" aria-label="Default select example">
+                <option selected>Select</option>
+                <option [ngValue]="'M'" value="M">Male</option>
+                <option [ngValue]="'F'" value="F">Female</option>
+              </select>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+
+
+            <div class="col-md-8 mb-3">
+
+              <label for="validationCustom02">Birth Date: </label>
+
+              <form class="row">
+                <div class="col-12">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker
+                      #d="ngbDatepicker" />
+                    <button style="background-color: var(--main-color) !important; color: white" class="btn btn-outline-secondary bi bi-calendar3"  (click)="d.toggle()"
+                      type="button"></button>
+                  </div>
+                </div>
+              </form>
+              
+              <!-- <hr /> -->
+              <!-- <pre>Model: {{ model | json }}</pre>
+            
+            <ngb-alert class="mt-3 mb-0" type="info" [dismissible]="false">
+              You must provide the icon for the button that matches your application's style. In this example, the icon comes from
+              <code>bootstrap-icons</code>.
+            </ngb-alert> -->
+
+
+            </div>
+
+
+            <div class="col-md-8 mb-3">
+              <label for="validationCustom02">Title: </label>
+              <input type="text" class="form-control" id="validationCustom02" placeholder="Title"
+                formControlName="title" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+
+
+            <div class="col-md-8 mb-3">
+              <label for="validationCustom02">Compensation: </label>
+              <input type="text" class="form-control" id="validationCustom02" placeholder="Salary"
+                formControlName="salary" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+            </div>
+
+
+
+
+            <div class="col-md-8 mb-3">
+              <label for="validationCustom02">Department: </label>
+
+              <select class="form-select" aria-label="Default select example" formControlName="dept_no">
+                <option selected>Select</option>
+                <ng-container *ngFor="let department of departments">
+                  <option [ngValue]="department['dept_no']" value="department['dept_no']">{{department['dept_name']}}
+                  </option>
+                </ng-container>
+              </select>
+
+            </div>
+
+
+            <!-- <div class="col-md-8 mb-3">
+            <label for="validationCustom02">Manager: </label>
+
+            <select class="form-select" aria-label="Default select example">
+              <option selected>Select</option>
+              <ng-container *ngFor="let item of list">
+                <option [ngValue]="item" *ngIf="item.emp_no!=loggedInUser" value="1">{{item.first_name}} {{item.last_name}}</option>
+              </ng-container>
+            </select>
+            
+          </div> -->
+
+          </div>
+        </form>
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" style="background-color: var(--main-color) !important; color: white"  class="btn btn-primary" (click)="submit()">Save</button>
+        <button type="button" class="btn btn-light" (click)="closePopup()">
+          Clear
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':'block'}" *ngIf="showViewPopup">
+  <div class="modal-dialog modal-xl" role="document">
+
+    <div class="modal-content">
+      <button  type="button" class="btn-close p-1 m-1" style="align-self: end;" aria-label="Close"
+        (click)="closeViewPopup()"></button>
+      <!-- <div class="modal-header" style = "align-self: center;"> 
+      Register Employee
+    </div>  -->
+
+      <div class="modal-body w-100" style="align-self: center;">
+
+        <h3 class="p-2">Employee Details</h3>
+
+        <app-dashboard [emp_no]="viewEmpNo"></app-dashboard>
+
+
+
+
+
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="submit()">Save</button>
+        <button type="button" class="btn btn-light" (click)="closePopup()">
+          Clear
+        </button>
+
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <table class="table table-striped p-3 m-3">
-    <thead>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Gender</th>
+      <th scope="col">DOB</th>
+      <th scope="col">Date Hired</th>
+      <th>Actions</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let item of list; ; index as i">
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Gender</th>
-        <th scope="col">DOB</th>
-        <th scope="col">Department</th>
-        <th scope="col">Date Hired</th>
-        <th scope="col">Title</th>
-        <th scope="col">Salary</th>
-        <th>Actions</th>
-        
+
+        <th scope="row">{{item.emp_no}}</th>
+        <td>{{item.first_name}} {{item.last_name}}</td>
+        <td>{{item.gender ==='M' ? 'Male': 'Female'}}</td>
+        <td>{{item.birth_date | date}}</td>
+        <td>{{item.hire_date | date}}</td>
+        <td>
+          <i (click)="viewEmployeeDetails(item.emp_no)" class="bi bi-eye p-2"></i>
+          <i (click)="openEditEmployeeForm(item.emp_no)" class="bi bi-pen p-2"></i>
+        </td>
       </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Male</td>
-        <td>12/21/1999</td>
-        <td>HR</td>
-        <td>12/10/2020</td>
-        <td>Software Engineer</td>
-        <td>$10,000</td>
-        <td></td>
-      </tr>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Male</td>
-        <td>12/21/1999</td>
-        <td>HR</td>
-        <td>12/10/2020</td>
-        <td>Software Engineer</td>
-        <td>$10,000</td>
-        <td></td>
-      </tr>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Male</td>
-        <td>12/21/1999</td>
-        <td>HR</td>
-        <td>12/10/2020</td>
-        <td>Software Engineer</td>
-        <td>$10,000</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
+
+    </ng-container>
+  </tbody>
+</table>
+
+<nav *ngIf="!showCondensedPagination" aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Previous</a>
+    </li>
+    <ng-container *ngFor="let item of iterator; index as i">
+      <li class="page-item"><a class="page-link" href="#">{{i+1}}</a></li>
+    </ng-container>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+
+  </ul>
+</nav>
+
+<nav *ngIf="showCondensedPagination" aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" disabled="currentPage==1">
+      <a class="page-link" tabindex="-1" (click)="getEmployees(currentPage-1)">Previous</a>
+    </li>
+
+    <ng-container *ngIf="currentPage < 5">
+
+      <ng-container *ngFor="let item of iterator; index as i">
+        <li class="page-item"><a class="page-link" [ngClass]="currentPage == i+1 ? 'active':''"
+            (click)="getEmployees(i+1)">{{i+1}}</a></li>
+
+      </ng-container>
+
+    </ng-container>
+
+    
+
+    <!-- <ng-container *ngIf="currentPage == 5">
+
+        <ng-container *ngFor="let item of iterator; index as i">
+          <li class="page-item"><a class="page-link" [ngClass]="currentPage == i+1 ? 'active':''" (click)="getEmployees(i+1)">{{i+1}}</a></li>
+        </ng-container>
+
+      </ng-container> -->
+
+    <ng-container *ngIf="currentPage >= 5">
+      <li class="page-item"><a class="page-link" (click)="getEmployees(1)">{{1}}</a></li>
+      <li class="page-item">.</li>
+      <li class="page-item">.</li>
+      <li class="page-item">.</li>
+      <li class="page-item"><a class="page-link" (click)="getEmployees(currentPage-1)">{{currentPage-1}}</a></li>
+      <ng-container *ngFor="let item of iterator; index as i">
+        <li *ngIf="currentPage+i<=pageCount" class="page-item"><a class="page-link" [ngClass]="i==0 ? 'active':''"
+            (click)="getEmployees(currentPage+i)">{{currentPage+i}}</a></li>
+      </ng-container>
+
+    </ng-container>
+
+
+
+    <ng-container *ngIf="currentPage< pageCount-5">
+      <li class="page-item">.</li>
+      <li class="page-item">.</li>
+      <li class="page-item">.</li>
+      <li class="page-item"><a class="page-link" (click)="getEmployees(pageCount-1)">{{pageCount-1}} </a></li>
+      <li class="page-item"><a class="page-link" (click)="getEmployees(pageCount)">{{pageCount}}</a></li>
+    </ng-container>
+
+    <li class="page-item">
+      <a class="page-link" (click)="getEmployees(currentPage+1)">Next</a>
+    </li>
+
+  </ul>
+</nav>

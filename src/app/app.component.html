@@ -1,28 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-dark" style="background: #534360;">
-  <a class="navbar-brand m-2" href="#">HR-Portal</a>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: var(--main-color);">
+  <a class="navbar-brand m-2" href="#"><img src="../assets/GeeksquadLogo.png" style="width: 50px"> HR-Portal</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav w-100">
-      <a class="nav-item nav-link active" href="/dashboard">Dashboard</a>
-      <a class="nav-item nav-link active" href="/departments">Departments</a>
-      <a class="nav-item nav-link active" href="/employees">Employees</a>
-      <a *ngIf="!(auth.isAuthenticated$ | async)" href="#" class="nav-item nav-link" (click)="auth.loginWithRedirect()">Login</a>
+      <ng-container *ngIf="(auth.user$ | async)">
+        <a class="nav-item nav-link active"  href="/dashboard">Dashboard</a>
+        <a class="nav-item nav-link active" *ngIf="isAdmin" href="/departments">Departments</a>
+        <a class="nav-item nav-link active" *ngIf="isAdmin" href="/employees">Employees</a>
+      </ng-container>
+      
+      <a *ngIf="!(auth.user$ | async)" href="#" class="nav-item nav-link" (click)="auth.loginWithRedirect()">Login</a>
 
-      <div *ngIf="(auth.isAuthenticated$ | async)" class=" w-100">
+      <div *ngIf="(auth.user$ | async)" class=" w-100">
           <div ngbDropdown class="d-inline-block dropstart" style="float: right;">
             <button *ngIf="auth.user$ | async as user" type="button" class="btn text-white" id="dropdownBasic1" ngbDropdownToggle>
               <i class="bi bi-person"></i>   {{ user.name }}         </button> 
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropstart">
-              <button ngbDropdownItem>Profile</button>
+              <button ngbDropdownItem href="/dashboard">Profile</button>
               <button ngbDropdownItem (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">Logout</button>
             </div>
           </div>
-      
       </div>
     </div>
   </div>
-  
 </nav>
-<router-outlet></router-outlet>
+
+<router-outlet *ngIf="(auth.user$ | async)"></router-outlet>
