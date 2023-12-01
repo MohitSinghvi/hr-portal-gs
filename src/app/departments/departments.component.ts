@@ -115,6 +115,7 @@ export class DepartmentsComponent {
     this.hrmService.addUpdateDepartment(body).subscribe(
       (res) =>{
         this.closePopup();
+        alert("Department Changes Successful");
         this.getAllDepartments();
 
       },

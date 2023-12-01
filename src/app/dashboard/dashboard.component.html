@@ -15,7 +15,7 @@
   
           <ul class="list-group list-group-flush">
             <li class="list-group-item p-3 m-3"><b>Name: </b> {{profile?.first_name}} {{profile?.last_name}}</li>
-            <li class="list-group-item p-3 m-3"><b>Gender: </b> {{profile?.gender ==='M' ? 'Male': 'Female'}}</li>
+            <li class="list-group-item p-3 m-3"><b>Gender: </b> {{profile?.gender ==='F' ? 'Female': 'Male'}}</li>
             <li class="list-group-item p-3 m-3"><b>Date Of Birth: </b> {{profile?.birth_date | date}}</li>
             <li class="list-group-item p-3 m-3"><b>Date hired: </b> {{profile?.hire_date | date}}</li>
           </ul>
