@@ -14,10 +14,13 @@ export class AppComponent implements OnInit{
   emp_no: any;
   loaded = false;
   isAdmin = false;
+  name : any;
   constructor(@Inject(DOCUMENT) public document: Document, public auth: AuthService, public hrmService: HrmService) {}
 
   ngOnInit(): void {
     this.token = localStorage.getItem("token");
+    this.emp_no = localStorage.getItem("emp_no");
+    this.name = localStorage.getItem("name");
 
     this.auth.idTokenClaims$.subscribe(
       (res)=>{
@@ -33,12 +36,13 @@ export class AppComponent implements OnInit{
       }
     );
 
-    // if(!localStorage.getItem('emp_no')){
+    if(!localStorage.getItem('emp_no')){
       this.auth.user$.subscribe(
-        (res)=>{
+        (res: any)=>{
           this.emp_no = res?.nickname;
           if(this.emp_no){
             localStorage.setItem('emp_no', this.emp_no);
+            localStorage.setItem('name', res?.name);
           }
           this.loaded = true;
           this.hrmService.getEmployeeProfile(localStorage.getItem('emp_no')).subscribe(
@@ -51,13 +55,23 @@ export class AppComponent implements OnInit{
         },
         (error)=>{
         }
+      )      
+    } else {
+      this.loaded = true;
+      this.hrmService.getEmployeeProfile(localStorage.getItem('emp_no')).subscribe(
+        (res: any)=>{
+          this.isAdmin = res[0]?.is_admin==1? true: false;
+        },(err) =>{
+
+        }
       )
+    }
+  }
 
 
-      
-    // } else {
-    //   this.loaded = true;
-    // }
+  logout(){
+    this.auth.logout({ logoutParams: { returnTo: document.location.origin } })
+    localStorage.removeItem("emp_no");
   }
 
 }

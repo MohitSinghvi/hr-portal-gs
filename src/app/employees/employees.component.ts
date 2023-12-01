@@ -59,6 +59,7 @@ openPopup(editMode?: any) {
   iterator: any;
   showCondensedPagination= false;
   currentPage = 1;
+  employeeSubscription: any;
 
   showPopup = false;
   constructor(public hrmService: HrmService){
@@ -67,7 +68,7 @@ openPopup(editMode?: any) {
 
   ngOnInit(){
     this.loggedInUser = localStorage.getItem('emp_no');
-    this.hrmService.getEmployees().subscribe(
+    this.employeeSubscription = this.hrmService.getEmployees().subscribe(
       (result: any) =>{
         this.list = result?.result;
         this.count = result?.count;
@@ -96,6 +97,9 @@ openPopup(editMode?: any) {
   getEmployees(pageNo: any){
     if(pageNo>=1){
       this.currentPage = pageNo;
+      if(this.employeeSubscription){
+        this.employeeSubscription.unsubscribe();
+      }
       this.hrmService.getEmployees(pageNo).subscribe(
         (result: any) =>{
           this.list = result?.result;
@@ -179,6 +183,8 @@ openPopup(editMode?: any) {
     this.hrmService.addUpdateEmployee(body, this.profile?.emp_no).subscribe(
       (result)=>{
         console.log("Success");
+        alert("Employee Changes Successful");
+        this.getEmployees(this.currentPage);
         this.closePopup();
       },(error) => {
         console.log("Failure");

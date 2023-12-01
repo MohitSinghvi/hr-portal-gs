@@ -1,7 +1,7 @@
 <h3 class="p-3 m-3" style="float: left;">Departments</h3>
 
 <button type="button" class="btn btn-light m-3"
-  style="float: right; background-color: var(--main-color) !important; color: white" (click)="openEditDepartmentForm($event)">Create
+  style="float: right; background-color: var(--main-color) !important; color: white" (click)="openEditDepartmentForm()">Create
   New</button>
 <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':'block'}" *ngIf="showPopup">
   <div class="modal-dialog" role="document">
@@ -41,19 +41,6 @@
               </select>
 
             </div>
-
-
-            <!-- <div class="col-md-8 mb-3">
-            <label for="validationCustom02">Manager: </label>
-
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Select</option>
-              <ng-container *ngFor="let item of list">
-                <option [ngValue]="item" *ngIf="item.emp_no!=loggedInUser" value="1">{{item.first_name}} {{item.last_name}}</option>
-              </ng-container>
-            </select>
-            
-          </div> -->
 
           </div>
         </form>

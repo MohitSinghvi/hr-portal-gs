@@ -5,21 +5,21 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav w-100">
-      <ng-container *ngIf="(auth.user$ | async)">
+      <ng-container *ngIf="emp_no" >
         <a class="nav-item nav-link active"  href="/dashboard">Dashboard</a>
         <a class="nav-item nav-link active" *ngIf="isAdmin" href="/departments">Departments</a>
         <a class="nav-item nav-link active" *ngIf="isAdmin" href="/employees">Employees</a>
       </ng-container>
       
-      <a *ngIf="!(auth.user$ | async)" href="#" class="nav-item nav-link" (click)="auth.loginWithRedirect()">Login</a>
+      <a *ngIf="!emp_no;" href="#" class="nav-item nav-link" (click)="auth.loginWithRedirect()">Login</a>
 
-      <div *ngIf="(auth.user$ | async)" class=" w-100">
+      <div *ngIf="emp_no" class=" w-100">
           <div ngbDropdown class="d-inline-block dropstart" style="float: right;">
-            <button *ngIf="auth.user$ | async as user" type="button" class="btn text-white" id="dropdownBasic1" ngbDropdownToggle>
-              <i class="bi bi-person"></i>   {{ user.name }}         </button> 
+            <button *ngIf="emp_no" type="button" class="btn text-white" id="dropdownBasic1" ngbDropdownToggle>
+              <i class="bi bi-person"></i>  </button> 
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropstart">
               <button ngbDropdownItem href="/dashboard">Profile</button>
-              <button ngbDropdownItem (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">Logout</button>
+              <button ngbDropdownItem (click)="logout()">Logout</button>
             </div>
           </div>
       </div>
@@ -27,4 +27,4 @@
   </div>
 </nav>
 
-<router-outlet *ngIf="(auth.user$ | async)"></router-outlet>
+<router-outlet *ngIf="emp_no"></router-outlet>
