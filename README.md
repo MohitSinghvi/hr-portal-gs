@@ -1,4 +1,8 @@
 # HrPortal
+HR portal Application:
+
+Backend is present in a seperate repository: <a href="https://github.com/MohitSinghvi/hr-portal-service"> https://github.com/MohitSinghvi/hr-portal-service </a>
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.
 
